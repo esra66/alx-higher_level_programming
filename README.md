@@ -1,0 +1,1 @@
+The repository includes programs developed for the higher-level programming track at ALX Africa. These projects, which started in the fourth month of the first-year curriculum, focus on learning Python. Additionally, I have been enhancing my proficiency in C and shell scripting. Below is the list of specific projects included in this repository.
