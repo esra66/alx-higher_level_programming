@@ -5,4 +5,4 @@ if __name__ == "__main__":
     sum = 0
     for i in range(count - 1):
         sum += int(sys.argv[i + 1])
-        print("{}".format(sum))
+    print("{}".format(sum))
