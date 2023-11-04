@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 def replace_in_list(my_list, idx, element):
     z = len(my_list)
-    if idx < 0 or idx >= z:
+    if idx < 0 or idx > z - 1:
         return my_list
     else:
         new_list = my_list[:]
