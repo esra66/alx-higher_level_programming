@@ -1,72 +1,70 @@
 #include "lists.h"
 #include <stdio.h>
 
-/**
- *  * is_palindrome - function that checks 
- *   * @list: double pointer
- *     * Return: 1 or 0
- */
-int is_palindrome(listint_t **list)
+int is_palindrome(listint_t **head)
 {
-	listint_t *slow = *list;
-	listint_t *fast = *list;
-	listint_t *mid = *list;
-	listint_t *duplicate = NULL;
+	listint_t *new_head, *tortoise, *hare, *previous_tortoise;
+	listint_t *cut = NULL, *half, *iterator1, *iterator2;
 
-	if (*list == NULL || (*list)->next == NULL)
+	if (!head || !*head)
 		return (1);
 
-	while (1)
+	new_head = *head;
+	if (new_head->next != NULL)
 	{
-		fast = fast->next->next;
-		if (!fast)
+		for (hare = new_head, tortoise = new_head; hare != NULL && hare->next != NULL;
+				previous_tortoise = tortoise, tortoise = tortoise->next)
+			hare = hare->next->next;
+		if (hare != NULL)
 		{
-			duplicate = slow->next;
-			break;
+			cut = tortoise;
+			tortoise = tortoise->next;
 		}
-		if (!fast->next)
+		previous_tortoise->next = NULL;
+		half = tortoise;
+		iterator1 = reverse_listint(&half);
+		for (iterator2 = *head; iterator2; iterator1 = iterator1->next, iterator2 = iterator2->next)
 		{
-			duplicate = slow->next->next;
-			break;
+			if (iterator2->n != iterator1->n)
+				return (0);
 		}
-		slow = slow->next;
-	}
-	reverse_list(&duplicate);
-
-	while (duplicate && mid)
-	{
-		if (mid->data == duplicate->data)
-		{
-			duplicate = duplicate->next;
-			mid = mid->next;
-		}
+		if (cut == NULL)
+			previous_tortoise->next = half;
 		else
-			return (0);
+		{
+			previous_tortoise->next = cut;
+			cut->next = half;
+		}
 	}
 
-	if (!duplicate)
-		return (1);
-	return (0);
+	return (1);
 }
 
 /**
- *  * reverse_list - function that reverses
- *   * @list: pointer to the first node
- *     * Return: pointer
+ *  * reverse_listint - Reverses a linked list in place
+ *   * @head: Pointer to a pointer
+ *     * Return: The new head
  */
-void reverse_list(listint_t **list)
+listint_t *reverse_listint(listint_t **head)
 {
-	listint_t *prev = NULL;
-	listint_t *current = *list;
-	listint_t *next = NULL;
+	listint_t *next_node = NULL, *previous_node = NULL;
 
-	while (current)
+	if (!head || !*head)
+		return (NULL);
+
+	while ((*head)->next)
 	{
-		next = current->next;
-		current->next = prev;
-		prev = current;
-		current = next;
+		next_node = (*head)->next;
+
+		(*head)->next = previous_node;
+
+		previous_node = *head;
+
+		*head = next_node;
 	}
-	*list = prev;
+
+	(*head)->next = previous_node;
+
+	return (*head);
 }
 
