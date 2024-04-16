@@ -44,7 +44,6 @@ try:
         except:
             pass
 
-
         lc += 1
 
     print_info()
